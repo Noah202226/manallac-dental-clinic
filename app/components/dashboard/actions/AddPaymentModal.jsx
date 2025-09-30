@@ -50,7 +50,7 @@ export default function AddPaymentModal({ patient, onClose }) {
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
       <div className="bg-gray-900 p-6 rounded-xl border border-gray-700 w-96">
-        <h2 className="text-xl font-bold text-yellow-400 mb-4">
+        <h2 className="text-xl font-bold text-[var(--theme-bg)] mb-4">
           Add Payment for {patient.patientName}
         </h2>
 
@@ -63,7 +63,7 @@ export default function AddPaymentModal({ patient, onClose }) {
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="w-full input input-bordered bg-black text-yellow-400 border-yellow-400"
+              className="w-full input input-bordered bg-black text-[var(--theme-bg)] border-[var(--theme-bg)]"
               required
             />
           </div>
@@ -79,7 +79,7 @@ export default function AddPaymentModal({ patient, onClose }) {
             <button
               type="submit"
               disabled={loading}
-              className="btn btn-sm bg-yellow-400 hover:bg-yellow-500 text-black rounded-lg"
+              className="btn btn-sm bg-[var(--theme-text)] hover:bg-[var(--theme-text)]/70 hover:text-[var(--theme-bg)] text-black rounded-lg"
             >
               {loading ? "Saving..." : "Add Payment"}
             </button>

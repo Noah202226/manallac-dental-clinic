@@ -5,7 +5,7 @@ export default function NewPatientModal({ openDialog }) {
     <>
       {/* Open Button */}
       <button
-        className="btn bg-yellow-400 text-black hover:bg-yellow-500 rounded-lg shadow-md"
+        className="btn bg-[var(--theme-text)] text-white hover:bg-[var(--theme-text)]/70 rounded-lg shadow-xs"
         onClick={() => openDialog()}
       >
         + New Patient

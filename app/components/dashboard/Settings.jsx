@@ -37,11 +37,13 @@ export default function SettingsTabs() {
     <div className="w-full">
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold text-yellow-400">Settings</h2>
+        <h2 className="text-2xl font-bold text-[var(--theme-text)]">
+          Settings
+        </h2>
       </div>
 
       {/* 🚀 Custom Scrollable Tab Bar */}
-      <div className="relative border-b border-yellow-400 overflow-x-auto">
+      <div className="relative border-b border-[var(--theme-text)] overflow-x-auto">
         <div className="flex space-x-2 min-w-max px-2">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.key;
@@ -52,8 +54,8 @@ export default function SettingsTabs() {
                 className={`relative px-4 py-2 rounded-md font-semibold transition-colors 
                   ${
                     isActive
-                      ? "text-black bg-yellow-400"
-                      : "text-gray-400 hover:text-yellow-300 hover:bg-yellow-400/20"
+                      ? "text-black bg-[var(--theme-text)]"
+                      : "text-gray-400 hover:text-[var(--theme-text)] hover:bg-yellow-400/20"
                   }`}
               >
                 {tab.label}
@@ -71,13 +73,13 @@ export default function SettingsTabs() {
       </div>
 
       {/* Tab Content */}
-      <div className="mt-6 p-4  border border-yellow-400 rounded-lg bg-black">
+      <div className="mt-6 p-4  border border-yellow-400 rounded-lg bg-[var(--theme-text)]">
         {/* 🔹 Personalization */}
         {activeTab === "personalization" && <PersonalizationTab />}
 
         {/* 🔹 Users */}
         {activeTab === "users" && (
-          <div className="text-yellow-400 space-y-4">
+          <div className="text-[var(--theme-bg)] space-y-4">
             {/* Add User */}
             <div className="flex gap-2">
               <input
@@ -87,7 +89,7 @@ export default function SettingsTabs() {
                   setNewUser((u) => ({ ...u, name: e.target.value }))
                 }
                 placeholder="Name"
-                className="input input-bordered bg-black border-yellow-400"
+                className="input input-bordered bg-[var(--theme-bg)] border-[var(--theme-bg)] text-[var(--theme-text)]"
               />
               <input
                 type="email"
@@ -96,7 +98,7 @@ export default function SettingsTabs() {
                   setNewUser((u) => ({ ...u, email: e.target.value }))
                 }
                 placeholder="Email"
-                className="input input-bordered bg-black border-yellow-400"
+                className="input input-bordered bg-[var(--theme-bg)] border-[var(--theme-bg)] text-[var(--theme-text)]"
               />
               <button
                 onClick={() => {
@@ -104,7 +106,7 @@ export default function SettingsTabs() {
                   addUser(newUser);
                   setNewUser({ name: "", email: "" });
                 }}
-                className="btn bg-yellow-400 text-black border-none"
+                className="btn bg-[var(--theme-bg)] text-black border-none"
               >
                 <Plus size={16} />
               </button>

@@ -22,7 +22,7 @@ const ProductModal = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50 backdrop-blur-sm">
-      <div className="bg-black border border-yellow-500/40 text-yellow-400 p-8 rounded-3xl w-full max-w-lg shadow-xl">
+      <div className="bg-[var(--theme-text)] border border-yellow-500/40 text-[var(--theme-bg)] p-8 rounded-3xl w-full max-w-lg shadow-xl">
         <h3 className="text-2xl font-bold mb-6 text-center">
           {isEditing ? "Edit Product" : "Add New Product"}
         </h3>
@@ -34,7 +34,7 @@ const ProductModal = ({
               type="text"
               id="productName"
               placeholder=" "
-              className="peer w-full rounded-xl border border-yellow-400 bg-black px-4 pt-5 pb-2 text-yellow-400 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"
+              className="peer w-full rounded-xl border border-[var(--theme-bg)] bg-black px-4 pt-5 pb-2 text-[var(--theme-bg)] placeholder-transparent focus:outline-none focus:ring-2 focus:ring-[var(--theme-bg)] transition"
               value={productForm.name}
               onChange={(e) =>
                 setProductForm({ ...productForm, name: e.target.value })
@@ -42,7 +42,7 @@ const ProductModal = ({
             />
             <label
               htmlFor="productName"
-              className="absolute left-4 top-2 text-gray-400 text-sm transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-yellow-400 peer-focus:text-sm"
+              className="absolute left-4 top-2 text-gray-400 text-sm transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-[var(--theme-bg)] peer-focus:text-sm"
             >
               Product Name
             </label>
@@ -52,7 +52,7 @@ const ProductModal = ({
           <div className="relative">
             <select
               id="productCategory"
-              className="peer w-full rounded-xl border border-yellow-400 bg-black px-4 pt-5 pb-2 text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition appearance-none"
+              className="peer w-full rounded-xl border border-[var(--theme-bg)] bg-black px-4 pt-5 pb-2 text-[var(--theme-bg)] focus:outline-none focus:ring-2 focus:ring-[var(--theme-bg)] transition appearance-none"
               value={productForm.category}
               onChange={(e) =>
                 setProductForm({ ...productForm, category: e.target.value })
@@ -69,7 +69,7 @@ const ProductModal = ({
             </select>
             <label
               htmlFor="productCategory"
-              className="absolute left-4 top-2 text-gray-400 text-sm transition-all peer-focus:top-2 peer-focus:text-yellow-400 peer-focus:text-sm"
+              className="absolute left-4 top-2 text-gray-400 text-sm transition-all peer-focus:top-2 peer-focus:text-[var(--theme-bg)] peer-focus:text-sm"
             >
               Category
             </label>
@@ -82,7 +82,7 @@ const ProductModal = ({
                 type="number"
                 id="productPrice"
                 placeholder=" "
-                className="peer w-full rounded-xl border border-yellow-400 bg-black px-4 pt-5 pb-2 text-yellow-400 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"
+                className="peer w-full rounded-xl border border-[var(--theme-bg)] bg-black px-4 pt-5 pb-2 text-[var(--theme-bg)] placeholder-transparent focus:outline-none focus:ring-2 focus:ring-[var(--theme-bg)] transition"
                 value={productForm.price}
                 onChange={(e) =>
                   setProductForm({ ...productForm, price: e.target.value })
@@ -90,7 +90,7 @@ const ProductModal = ({
               />
               <label
                 htmlFor="productPrice"
-                className="absolute left-4 top-2 text-gray-400 text-sm transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-yellow-400 peer-focus:text-sm"
+                className="absolute left-4 top-2 text-gray-400 text-sm transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-[var(--theme-bg)] peer-focus:text-sm"
               >
                 Price
               </label>
@@ -101,7 +101,7 @@ const ProductModal = ({
                 type="number"
                 id="productStock"
                 placeholder=" "
-                className="peer w-full rounded-xl border border-yellow-400 bg-black px-4 pt-5 pb-2 text-yellow-400 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"
+                className="peer w-full rounded-xl border border-[var(--theme-bg)] bg-black px-4 pt-5 pb-2 text-[var(--theme-bg)] placeholder-transparent focus:outline-none focus:ring-2 focus:ring-[var(--theme-bg)] transition"
                 value={productForm.stock}
                 onChange={(e) =>
                   setProductForm({ ...productForm, stock: e.target.value })
@@ -109,7 +109,7 @@ const ProductModal = ({
               />
               <label
                 htmlFor="productStock"
-                className="absolute left-4 top-2 text-gray-400 text-sm transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-yellow-400 peer-focus:text-sm"
+                className="absolute left-4 top-2 text-gray-400 text-sm transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-[var(--theme-bg)] peer-focus:text-sm"
               >
                 Stock
               </label>
@@ -121,7 +121,7 @@ const ProductModal = ({
         <div className="flex justify-end gap-4 mt-8">
           <button
             onClick={onSave}
-            className={`btn bg-yellow-400 text-black hover:bg-yellow-500 rounded-xl px-6 py-2 font-semibold shadow-md transition ${
+            className={`btn bg-[var(--theme-bg)] text-black hover:bg-yellow-500 rounded-xl px-6 py-2 font-semibold shadow-md transition ${
               loading ? "opacity-50 cursor-not-allowed" : ""
             }`}
             disabled={loading}
@@ -145,7 +145,7 @@ const DeleteModal = ({ isOpen, onClose, onConfirm, product }) => {
   if (!isOpen || !product) return null;
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
-      <div className="bg-black border border-red-500/50 text-yellow-400 p-6 rounded-2xl w-full max-w-sm text-center">
+      <div className="bg-black border border-red-500/50 text-[var(--theme-bg)] p-6 rounded-2xl w-full max-w-sm text-center">
         <h3 className="text-lg font-bold mb-4 text-red-500">Delete Product?</h3>
         <p className="mb-4">
           Are you sure you want to delete{" "}
@@ -276,24 +276,24 @@ export default function ProductsDashboard() {
   );
 
   return (
-    <div className="flex flex-col h-full overflow-hidden text-yellow-400">
+    <div className="flex flex-col h-full overflow-hidden text-[var(--theme-bg)]">
       <Toaster position="top-right" />
 
       {/* 🔹 Header */}
-      <div className="shrink-0 bg-black pb-2 z-5 px-2">
-        <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
+      <div className="shrink-0 bg-[var(--theme-bg)] pb-2 z-5 px-2">
+        <h2 className="text-2xl font-bold mb-2 flex items-center gap-2 text-[var(--theme-text)]">
           <FaBoxOpen /> Products
         </h2>
 
         <div className="flex justify-between items-center mb-4">
           <button
             onClick={openAddModal}
-            className="btn btn-sm bg-yellow-400 text-black hover:bg-yellow-500 flex items-center gap-2"
+            className="btn btn-sm bg-[var(--theme-text)] text-[var(--theme-bg)] hover:bg-[var(--theme-text)]/70 flex items-center gap-2 rounded-2xl"
           >
             <FiPlus /> Add Product
           </button>
 
-          <div className="font-bold text-yellow-400">
+          <div className="font-bold text-[var(--theme-text)]">
             Total Value: <FaPesoSign className="inline" />{" "}
             {totalValue.toLocaleString()}
           </div>
@@ -308,37 +308,43 @@ export default function ProductsDashboard() {
         {products.length === 0 ? (
           <div className="text-center py-8 text-gray-500">
             <p>No products available.</p>
-            <img
+            {/* <img
               src="/empty-state.svg"
               alt="No products"
               className="mx-auto mt-4 w-48 opacity-50"
-            />
+            /> */}
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {products.map((p) => (
               <div
                 key={p.$id}
-                className="card bg-black border border-yellow-500/40 shadow-lg rounded-2xl p-4 hover:shadow-yellow-500/20 transition-all duration-300"
+                className="card bg-[var(--theme-text)] border border-yellow-500/40 shadow-lg rounded-2xl p-4 hover:shadow-yellow-500/20 transition-all duration-300"
               >
-                <h2 className="text-lg font-bold text-yellow-400">{p.name}</h2>
-                <p className="text-sm text-gray-400 mb-2">{p.category}</p>
+                <h2 className="text-lg font-bold text-[var(--theme-bg)]">
+                  {p.name}
+                </h2>
+                <p className="text-sm text-[var(--theme-bg)] mb-2">
+                  {p.category}
+                </p>
 
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm text-gray-400">Price</span>
-                  <span className="font-bold text-yellow-400 flex items-center gap-1">
+                  <span className="text-sm text-[var(--theme-bg)]">Price</span>
+                  <span className="font-bold text-[var(--theme-bg)] flex items-center gap-1">
                     <FaPesoSign /> {p.price.toLocaleString()}
                   </span>
                 </div>
 
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm text-gray-400">Stock</span>
-                  <span className="font-bold text-yellow-400">{p.stock}</span>
+                  <span className="text-sm text-[var(--theme-bg)]">Stock</span>
+                  <span className="font-bold text-[var(--theme-bg)]">
+                    {p.stock}
+                  </span>
                 </div>
 
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm text-gray-400">Total</span>
-                  <span className="font-bold text-yellow-400 flex items-center gap-1">
+                  <span className="text-sm text-[var(--theme-bg)]">Total</span>
+                  <span className="font-bold text-[var(--theme-bg)] flex items-center gap-1">
                     <FaPesoSign /> {(p.price * p.stock).toLocaleString()}
                   </span>
                 </div>

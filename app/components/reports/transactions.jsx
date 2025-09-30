@@ -125,30 +125,30 @@ export default function SalesDashboard() {
   }, [fetchTransactions]);
 
   return (
-    <div className="flex flex-1 flex-col h-full overflow-hidden text-yellow-400">
+    <div className="flex flex-1 flex-col h-full overflow-hidden text-[var(--theme-bg)]">
       {/* 🔹 Fixed Header (totals + filter) */}
-      <div className="shrink-0 bg-black pb-2 z-5">
+      <div className="shrink-0 bg-[var(--theme-text)] p-2 z-5">
         <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
           <FaPesoSign /> Sales Dashboard
         </h2>
 
         {/* Totals */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          <div className="card bg-black border border-yellow-500/40 shadow-lg rounded-2xl p-4 text-yellow-400">
+          <div className="card bg-black border border-yellow-500/40 shadow-lg rounded-2xl p-4 text-[var(--theme-bg)]">
             <h3 className="text-sm font-medium text-gray-400">Today</h3>
-            <p className="text-2xl md:text-3xl font-extrabold text-yellow-400">
+            <p className="text-2xl md:text-3xl font-extrabold text-[var(--theme-bg)]">
               ₱{totals.today.toLocaleString()}
             </p>
           </div>
-          <div className="card bg-black border border-yellow-500/40 shadow-lg rounded-2xl p-4 text-yellow-400">
+          <div className="card bg-black border border-yellow-500/40 shadow-lg rounded-2xl p-4 text-[var(--theme-bg)]">
             <h3 className="text-sm font-medium text-gray-400">This Month</h3>
-            <p className="text-2xl md:text-3xl font-extrabold text-yellow-400">
+            <p className="text-2xl md:text-3xl font-extrabold text-[var(--theme-bg)]">
               ₱{totals.month.toLocaleString()}
             </p>
           </div>
-          <div className="card bg-black border border-yellow-500/40 shadow-lg rounded-2xl p-4 text-yellow-400">
+          <div className="card bg-black border border-yellow-500/40 shadow-lg rounded-2xl p-4 text-[var(--theme-bg)]">
             <h3 className="text-sm font-medium text-gray-400">This Year</h3>
-            <p className="text-2xl md:text-3xl font-extrabold text-yellow-400">
+            <p className="text-2xl md:text-3xl font-extrabold text-[var(--theme-bg)]">
               ₱{totals.year.toLocaleString()}
             </p>
           </div>
@@ -160,24 +160,24 @@ export default function SalesDashboard() {
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            className="input input-sm bg-black border border-yellow-400 text-yellow-400 rounded-lg"
+            className="input input-sm bg-black border border-[var(--theme-bg)] text-[var(--theme-bg)] rounded-lg"
           />
           <span className="text-gray-400">to</span>
           <input
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            className="input input-sm bg-black border border-yellow-400 text-yellow-400 rounded-lg"
+            className="input input-sm bg-black border border-[var(--theme-bg)] text-[var(--theme-bg)] rounded-lg"
           />
           <button
             onClick={() => filterByDate(startDate, endDate)}
-            className="btn btn-sm bg-yellow-400 text-black hover:bg-yellow-500 flex items-center gap-2"
+            className="btn btn-sm bg-[var(--theme-bg)] text-black hover:bg-yellow-500 flex items-center gap-2"
           >
             <FiFilter /> Filter
           </button>
           <button
             onClick={generateReport}
-            className="btn btn-sm bg-yellow-400 text-black"
+            className="btn btn-sm bg-[var(--theme-bg)] text-black"
           >
             Generate Sales Report
           </button>
@@ -194,9 +194,9 @@ export default function SalesDashboard() {
       <div className="flex-1 min-h-full overflow-y-auto">
         {/* Desktop Table */}
         <div className="hidden md:block  h-100 overflow-x-auto rounded-box border border-base-content/5">
-          <table className="table overflow-auto text-yellow-400">
+          <table className="table overflow-auto text-[var(--theme-text)]">
             <thead>
-              <tr className="bg-yellow-500 text-black sticky top-0">
+              <tr className="bg-[var(--theme-text)] text-black sticky top-0">
                 <th>Date</th>
                 <th>Patient</th>
                 <th>Service</th>
@@ -255,13 +255,13 @@ export default function SalesDashboard() {
                 </span>
               </div>
 
-              <h2 className="text-lg font-semibold text-yellow-400">
+              <h2 className="text-lg font-semibold text-[var(--theme-bg)]">
                 {t.patientName} – {t.serviceName}
               </h2>
 
               <div className="flex justify-between items-center mt-3">
                 <span className="text-sm text-gray-400">Amount</span>
-                <span className="text-xl font-bold text-yellow-400">
+                <span className="text-xl font-bold text-[var(--theme-bg)]">
                   ₱{t.amount.toLocaleString()}
                 </span>
               </div>

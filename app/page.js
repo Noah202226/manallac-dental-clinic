@@ -43,23 +43,23 @@ export default function HomePage() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.8, ease: "easeInOut" }}
-        className="fixed inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-black via-gray-900 to-black text-yellow-400 space-y-6 z-50"
+        className="fixed inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-gray-500 via-blue-900 to-gray-500 space-y-6 z-50"
       >
         {/* Logo */}
         <img
-          src="/m&m-dental-center-logo.png"
+          src="/manallac-logo.png"
           alt="M&M Dental Center Logo"
           className="w-32 h-32 object-contain animate-pulse drop-shadow-[0_0_20px_rgba(255,215,0,0.5)]"
         />
 
         {/* Spinner with glow */}
         <div className="relative flex items-center justify-center">
-          <div className="h-16 w-16 border-4 border-yellow-400/30 rounded-full animate-spin border-t-yellow-400"></div>
-          <div className="absolute h-10 w-10 border-2 border-yellow-400/50 rounded-full animate-ping"></div>
+          <div className="h-16 w-16 border-4 border-[var(--theme-text)]/30 rounded-full animate-spin border-t-blue-400"></div>
+          <div className="absolute h-10 w-10 border-2 border-[var(--theme-text)]/50 rounded-full animate-ping"></div>
         </div>
 
         {/* Status text */}
-        <span className="text-lg font-bold tracking-wide animate-pulse drop-shadow-[0_0_10px_rgba(255,215,0,0.7)]">
+        <span className="text-lg text-[var(--theme-text)] font-bold tracking-wide animate-pulse drop-shadow-[0_0_10px_rgba(255,215,0,0.7)]">
           Checking session...
         </span>
       </motion.div>

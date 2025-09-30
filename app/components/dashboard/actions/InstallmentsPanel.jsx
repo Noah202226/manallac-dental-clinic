@@ -12,16 +12,16 @@ export default function InstallmentsPanel({ patient, fetchPatients }) {
   const [showHistory, setShowHistory] = useState(false);
 
   return (
-    <div className="bg-gray-900 p-6 rounded-xl border border-gray-800 shadow-md">
-      <h3 className="font-semibold text-yellow-400 mb-3 flex items-center gap-2">
+    <div className="bg-gray-100 p-4 rounded-xl border border-gray-800 shadow-md">
+      <h3 className="font-semibold text-[var(--theme-text)] mb-3 flex items-center gap-2">
         💰 Installment Payments
       </h3>
 
       {patient?.serviceType === "Installment" ? (
         <div>
-          <p className="text-gray-300">
+          <p className="text-[var(--theme-text)]">
             Remaining Balance:{" "}
-            <span className="text-yellow-400 font-bold">
+            <span className="text-[var(--theme-text)] font-bold">
               ₱{patient.balance?.toLocaleString() ?? 0}
             </span>
           </p>
@@ -29,13 +29,13 @@ export default function InstallmentsPanel({ patient, fetchPatients }) {
           <div className="mt-4 flex gap-2">
             <button
               onClick={() => setShowModal(true)}
-              className="btn btn-sm bg-yellow-400 hover:bg-yellow-500 text-black rounded-lg"
+              className="btn btn-sm bg-[var(--theme-text)] hover:bg-yellow-500 text-black rounded-lg"
             >
               Add Payment
             </button>
             <button
               onClick={() => setShowHistory(true)}
-              className="btn btn-sm bg-gray-800 hover:bg-gray-700 text-yellow-400 rounded-lg"
+              className="btn btn-sm bg-gray-800 hover:bg-gray-700 text-[var(--theme-text)] rounded-lg"
             >
               View History
             </button>

@@ -36,16 +36,16 @@ export default function PatientsLayout() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-[calc(100vh-9rem)] bg-black text-gray-200">
+    <div className="flex flex-col md:flex-row h-[calc(100vh-9rem)] bg-[var(--theme-bg)] text-gray-200">
       {/* Left: Patients List */}
       <aside className="w-full md:w-1/3 border-r border-gray-800 flex flex-col">
-        <div className="sticky top-0 bg-black p-4 border-b border-gray-800">
+        <div className="sticky top-0 bg-[var(--theme-text)] p-4 border-b border-gray-800">
           <div className="flex items-center gap-2">
-            <FiSearch className="text-yellow-400" />
+            <FiSearch className="text-[var(--theme-bg)]" />
             <input
               type="text"
               placeholder="Search patients..."
-              className="input input-sm w-full bg-gray-800 text-gray-200 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              className="input input-sm w-full bg-[var(--theme-bg)] text-[var(--theme-text)] border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--theme-text)]"
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
@@ -60,13 +60,13 @@ export default function PatientsLayout() {
                 key={p.$id}
                 className={`flex items-center justify-between w-full p-3 rounded-lg transition ${
                   selectedPatient?.$id === p.$id
-                    ? "bg-yellow-500 text-black"
-                    : "bg-gray-800 text-white hover:bg-gray-700"
+                    ? "bg-[var(--theme-text)] text-[var(--theme-bg)]"
+                    : "bg-[var(--theme-text-muted)] text-white hover:bg-gray-700"
                 }`}
               >
                 <button
                   onClick={() => handleSelect(p)}
-                  className="flex-1 text-left"
+                  className="flex-1 text-left  cursor-pointer"
                 >
                   <h3 className="font-semibold">{p.patientName}</h3>
                   <p className="text-sm opacity-75">{p.address}</p>
@@ -77,10 +77,10 @@ export default function PatientsLayout() {
                   onClick={() => {
                     deletePatient(p.$id);
                   }}
-                  className="ml-2 text-red-400 hover:text-red-600"
+                  className="ml-2 text-red-600 hover:text-red-900"
                   title="Delete Patient"
                 >
-                  <FiTrash2 />
+                  <FiTrash2 size={20} />
                 </button>
               </div>
             ))
@@ -128,8 +128,8 @@ function PatientDetails({ patient, fetchPatients }) {
   return (
     <div className="space-y-0">
       {/* Patient Info + Installment Summary */}
-      <div className="bg-black p-3 rounded-2xl border border-yellow-500/40 shadow-lg">
-        <h2 className="text-3xl font-extrabold text-yellow-400 mb-4">
+      <div className="bg-[var(--theme-text)] p-3 rounded-2xl border border-yellow-500/40 shadow-lg">
+        <h2 className="text-3xl font-extrabold text-[var(--theme-bg)] mb-4">
           {patient.patientName}
         </h2>
 
@@ -138,34 +138,44 @@ function PatientDetails({ patient, fetchPatients }) {
           {/* Left: Patient Info */}
           <div className="space-y-2">
             <p className="text-gray-300">
-              <span className="font-semibold text-yellow-400">Age:</span>{" "}
+              <span className="font-semibold text-[var(--theme-bg)]">Age:</span>{" "}
               {patient.patientAge}
             </p>
             <p className="text-gray-300">
-              <span className="font-semibold text-yellow-400">Gender:</span>{" "}
+              <span className="font-semibold text-[var(--theme-bg)]">
+                Gender:
+              </span>{" "}
               {patient.gender}
             </p>
             <p className="text-gray-300">
-              <span className="font-semibold text-yellow-400">Contact:</span>{" "}
+              <span className="font-semibold text-[var(--theme-bg)]">
+                Contact:
+              </span>{" "}
               {patient.contact}
             </p>
             <p className="text-gray-300">
-              <span className="font-semibold text-yellow-400">Address:</span>{" "}
+              <span className="font-semibold text-[var(--theme-bg)]">
+                Address:
+              </span>{" "}
               {patient.address}
             </p>
             <p className="text-gray-300">
-              <span className="font-semibold text-yellow-400">Service:</span>{" "}
+              <span className="font-semibold text-[var(--theme-bg)]">
+                Service:
+              </span>{" "}
               {patient.serviceName}
             </p>
             <p className="text-gray-300">
-              <span className="font-semibold text-yellow-400">
+              <span className="font-semibold text-[var(--theme-bg)]">
                 Sub-service:
               </span>{" "}
               {patient.subServiceName || "-"}
             </p>
             <p className="text-gray-300">
-              <span className="font-semibold text-yellow-400">Price:</span> ₱
-              {patient.servicePrice}
+              <span className="font-semibold text-[var(--theme-bg)]">
+                Price:
+              </span>{" "}
+              ₱{patient.servicePrice}
             </p>
           </div>
 

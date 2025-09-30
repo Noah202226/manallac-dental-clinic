@@ -190,22 +190,22 @@ export default function DentalClinicLayout() {
   const [selectedSubService, setSelectedSubService] = useState("");
 
   return (
-    <div className="flex h-screen bg-black text-gray-200">
+    <div className="flex h-screen bg-[var(--theme-bg)] text-gray-200 ">
       {/* Sidebar (hidden on small screens, togglable) */}
       <aside
         className={`fixed md:static inset-y-0 left-0 transform ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 transition-transform duration-200 ease-in-out
-  w-64 bg-black border-r border-gray-800 flex flex-col z-20`}
+  w-64 bg-[var(--theme-bg)] border-r border-gray-800 flex flex-col z-20`}
       >
         <div className="p-6 border-b border-gray-800 flex items-center justify-between">
           <img
-            src="/m&m-dental-center-logo.png"
+            src="/manallac-logo.png"
             alt="Clinic Logo"
             className="top-4 left-4 w-24 opacity-80"
           />
-          <h1 className="text-2xl font-bold text-yellow-400">
-            {clientTitle ? clientTitle : "M&M Dental Center"}
+          <h1 className="text-2xl font-bold text-[var(--theme-text)]">
+            {clientTitle ? clientTitle : "Default Title"}
           </h1>
           <button
             className="md:hidden text-gray-400"
@@ -227,8 +227,8 @@ export default function DentalClinicLayout() {
               className={`flex items-center w-full px-4 py-3 rounded-xl transition-colors duration-200
                 ${
                   active === item.id
-                    ? "bg-yellow-400 text-black font-semibold"
-                    : "text-gray-300 hover:bg-gray-900 hover:text-yellow-400 hover:cursor-pointer"
+                    ? "bg-[var(--theme-text)] text-white font-semibold"
+                    : "text-gray-300 hover:bg-gray-900 hover:text-[var(--theme-text)] hover:cursor-pointer"
                 }
               `}
             >
@@ -250,19 +250,19 @@ export default function DentalClinicLayout() {
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto">
         {/* Header */}
-        <header className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-gray-800 bg-black sticky top-0 z-10">
+        <header className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-gray-800 bg-[var(--theme-bg)] sticky top-0 z-10">
           {/* LEFT: Mobile Menu Button + DateTime */}
           <div className="flex items-center gap-3">
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden text-yellow-400 p-2 rounded-lg hover:bg-gray-900"
+              className="md:hidden text-[var(--theme-text)] p-2 rounded-lg hover:bg-gray-900"
               onClick={() => setSidebarOpen(true)}
             >
               <Menu size={24} />
             </button>
 
             <div className="sm:flex flex-col text-center md:text-left">
-              <span className="text-xs sm:text-sm text-gray-300">
+              <span className="text-xs sm:text-sm text-gray-500">
                 {dateTime.toLocaleDateString(undefined, {
                   weekday: "long",
                   year: "numeric",
@@ -270,7 +270,7 @@ export default function DentalClinicLayout() {
                   day: "numeric",
                 })}{" "}
               </span>
-              <span className="text-base sm:text-lg font-mono text-yellow-400">
+              <span className="text-base sm:text-lg font-mono text-[var(--theme-text)]">
                 {dateTime.toLocaleTimeString()}
               </span>
             </div>
@@ -289,10 +289,10 @@ export default function DentalClinicLayout() {
                 </p>
               </div> */}
               <div className="text-center">
-                <p className="text-xs sm:text-sm text-gray-400">
+                <p className="text-xs sm:text-sm text-gray-600">
                   Total Patients
                 </p>
-                <p className="text-base sm:text-lg font-bold text-yellow-400">
+                <p className="text-base sm:text-lg font-bold text-[var(--theme-text)]">
                   {patients.length}
                 </p>
               </div>
@@ -314,7 +314,7 @@ export default function DentalClinicLayout() {
                   console.log("New Expense");
                   setIsOpen(true);
                 }}
-                className="px-3 py-1.5 rounded-md bg-gray-900 text-yellow-400 text-sm font-medium border border-gray-700 hover:bg-gray-800"
+                className="px-3 py-1.5 rounded-md bg-[var(--theme-bg)] text-[var(--theme-text)] text-sm font-medium border border-gray-700 hover:bg-gray-800"
               >
                 + Expense
               </button>
@@ -331,7 +331,7 @@ export default function DentalClinicLayout() {
               <div className="dropdown dropdown-top dropdown-end">
                 <label
                   tabIndex={0}
-                  className="btn btn-circle bg-yellow-400 text-black hover:bg-yellow-500 shadow-lg"
+                  className="btn btn-circle bg-[var(--theme-text)] text-black hover:bg-yellow-500 shadow-lg"
                 >
                   +
                 </label>
@@ -344,7 +344,7 @@ export default function DentalClinicLayout() {
                       onClick={() =>
                         document.getElementById("new_patient_modal").showModal()
                       }
-                      className="text-yellow-400 hover:bg-gray-800"
+                      className="text-[var(--theme-text)] hover:bg-gray-800"
                     >
                       + Patient
                     </button>
@@ -355,7 +355,7 @@ export default function DentalClinicLayout() {
                         console.log("New Expense");
                         setIsOpen(true);
                       }}
-                      className="text-yellow-400 hover:bg-gray-800"
+                      className="text-[var(--theme-text)] hover:bg-gray-800"
                     >
                       + Expense
                     </button>
@@ -374,13 +374,13 @@ export default function DentalClinicLayout() {
                 <span className="hidden sm:inline text-sm">
                   {current?.email}
                 </span>
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-yellow-400 flex items-center justify-center text-black font-bold">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[var(--theme-text)] flex items-center justify-center text-black font-bold">
                   {clientInitial ? clientInitial : "MM"}
                 </div>
               </div>
               <ul
                 tabIndex={0}
-                className="dropdown-content menu p-2 shadow bg-black border border-yellow-500 rounded-box w-44"
+                className="dropdown-content menu p-2 shadow bg-[var(--theme-bg)] border border-[var(--theme-text)] rounded-box w-44"
               >
                 {/* <li>
                   <a>Profile</a>
@@ -425,17 +425,17 @@ export default function DentalClinicLayout() {
       {/* Modal Overlay */}
       <dialog id="new_patient_modal" className="modal fixed inset-0 z-50">
         <div className="flex items-center justify-center w-full h-90vh bg-black/70 px-4">
-          <div className="w-full max-w-md sm:max-w-lg md:max-w-xl text-black rounded-xl shadow-lg border border-yellow-400 relative flex flex-col max-h-screen overflow-y-auto">
+          <div className="w-full max-w-md sm:max-w-lg md:max-w-xl text-black rounded-xl shadow-lg border border-[var(--theme-text)] relative flex flex-col max-h-screen overflow-y-auto">
             {/* Close Button */}
             <button
-              className="btn btn-sm btn-circle absolute right-3 top-3 bg-gray-800 text-yellow-400 hover:bg-yellow-500"
+              className="btn btn-sm btn-circle absolute right-3 top-3 bg-gray-800 text-[var(--theme-text)] hover:bg-[var(--theme-text)]/70"
               onClick={() => closeDialog()}
             >
               ✕
             </button>
 
             {/* Title */}
-            <h3 className="text-xl font-bold py-6 text-yellow-400 text-center sticky top-0 bg-gray-900 z-10">
+            <h3 className="text-xl font-bold py-6 text-[var(--theme-text)] text-center sticky top-0 bg-gray-900 z-10">
               Add New Patient
             </h3>
 
@@ -452,7 +452,7 @@ export default function DentalClinicLayout() {
                 <input
                   type="text"
                   name="name"
-                  className="w-full input input-bordered bg-black text-yellow-400 border-yellow-400 rounded-lg"
+                  className="w-full input input-bordered bg-black text-[var(--theme-bg)] border-[var(--theme-text)] rounded-lg"
                   required
                 />
               </div>
@@ -464,7 +464,7 @@ export default function DentalClinicLayout() {
                 <input
                   type="number"
                   name="age"
-                  className="w-full input input-bordered bg-black text-yellow-400 border-yellow-400 rounded-lg"
+                  className="w-full input input-bordered bg-black text-[var(--theme-bg)] border-[var(--theme-text)] rounded-lg"
                   required
                 />
               </div>
@@ -476,7 +476,7 @@ export default function DentalClinicLayout() {
                 <input
                   type="text"
                   name="address"
-                  className="w-full input input-bordered bg-black text-yellow-400 border-yellow-400 rounded-lg"
+                  className="w-full input input-bordered bg-black text-[var(--theme-bg)] border-[var(--theme-text)] rounded-lg"
                   required
                 />
               </div>
@@ -487,7 +487,7 @@ export default function DentalClinicLayout() {
                 </label>
                 <select
                   name="gender"
-                  className="w-full select select-bordered bg-black text-yellow-400 border-yellow-400 rounded-lg"
+                  className="w-full select select-bordered bg-black text-[var(--theme-bg)] border-[var(--theme-text)] rounded-lg"
                   required
                 >
                   <option value="" disabled>
@@ -505,7 +505,7 @@ export default function DentalClinicLayout() {
               <div>
                 <label className="block mb-2">Select Service</label>
                 <select
-                  className="select select-bordered w-full mb-4 bg-black text-yellow-400 border-yellow-400"
+                  className="select select-bordered w-full mb-4 bg-black text-[var(--theme-bg)] border-[var(--theme-text)]"
                   value={selectedService}
                   onChange={(e) => {
                     setSelectedService(e.target.value);
@@ -525,7 +525,7 @@ export default function DentalClinicLayout() {
                 <>
                   <label className="block mb-2">Select Sub-service</label>
                   <select
-                    className="select select-bordered w-full mb-4 bg-black text-yellow-400 border-yellow-400"
+                    className="select select-bordered w-full mb-4 bg-black text-[var(--theme-bg)] border-[var(--theme-text)]"
                     value={selectedSubService}
                     onChange={(e) => setSelectedSubService(e.target.value)}
                   >
@@ -549,7 +549,7 @@ export default function DentalClinicLayout() {
                   name="service-type"
                   value={serviceType}
                   onChange={(e) => setServiceType(e.target.value)}
-                  className="w-full input input-bordered bg-black text-yellow-400 border-yellow-400 rounded-lg"
+                  className="w-full input input-bordered bg-black text-[var(--theme-bg)] border-[var(--theme-text)] rounded-lg"
                 >
                   <option value="One-time">One-time</option>
                   <option value="Installment">Installment</option>
@@ -566,7 +566,7 @@ export default function DentalClinicLayout() {
                     <input
                       type="number"
                       name="totalPrice"
-                      className="w-full input input-bordered bg-black text-yellow-400 border-yellow-400 rounded-lg"
+                      className="w-full input input-bordered bg-black text-[var(--theme-bg)] border-[var(--theme-text)] rounded-lg"
                       required
                     />
                   </div>
@@ -578,7 +578,7 @@ export default function DentalClinicLayout() {
                     <input
                       type="number"
                       name="initialPayment"
-                      className="w-full input input-bordered bg-black text-yellow-400 border-yellow-400 rounded-lg"
+                      className="w-full input input-bordered bg-black text-[var(--theme-bg)] border-[var(--theme-text)] rounded-lg"
                       required
                     />
                   </div>
@@ -594,7 +594,7 @@ export default function DentalClinicLayout() {
                   <input
                     type="number"
                     name="servicePrice"
-                    className="w-full input input-bordered bg-black text-yellow-400 border-yellow-400"
+                    className="w-full input input-bordered bg-black text-[var(--theme-bg)] border-[var(--theme-text)]"
                     required
                   />
                 </div>
@@ -607,7 +607,7 @@ export default function DentalClinicLayout() {
                 <input
                   type="text"
                   name="contact"
-                  className="w-full input input-bordered bg-black text-yellow-400 border-yellow-400 rounded-lg"
+                  className="w-full input input-bordered bg-black text-[var(--theme-bg)] border-[var(--theme-text)] rounded-lg"
                   required
                 />
               </div>
@@ -615,7 +615,7 @@ export default function DentalClinicLayout() {
               <div className="flex justify-end gap-3 pt-4 sticky bottom-0 bg-gray-900">
                 <button
                   type="button"
-                  className="btn bg-gray-700 text-gray-200 hover:bg-gray-600 rounded-lg"
+                  className="btn bg-[var(--theme-text)]/50 text-gray-200 hover:bg-gray-600 rounded-lg"
                   onClick={() => closeDialog()}
                 >
                   Cancel
@@ -627,7 +627,7 @@ export default function DentalClinicLayout() {
     ${
       saving
         ? "bg-gray-600 text-gray-300 cursor-not-allowed"
-        : "bg-yellow-400 text-black hover:bg-yellow-500"
+        : "bg-[var(--theme-text)] text-[var(--theme-bg)] hover:bg-[var(--theme-text)]/40"
     }
   `}
                 >

@@ -3,8 +3,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --theme-bg: #1f0202;
-  --theme-text: oklch(85.2% 0.199 91.936);
+  --theme-bg: rgb(255, 255, 255);
+  --theme-text: oklch(61.782% 0.15282 244.682);
   --theme-text-muted: #689b8a;
 }
 

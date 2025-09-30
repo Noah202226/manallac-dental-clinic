@@ -46,46 +46,46 @@ export default function ExpenseModal({ isOpen, onClose, expense }) {
     <>
       {isOpen && (
         <div className="modal modal-open z-[9999]">
-          <div className="modal-box bg-black text-yellow-400 border-2 border-yellow-500">
-            <h3 className="font-bold text-lg mb-4 text-yellow-400">
+          <div className="modal-box bg-[var(--theme-text)] border-2 border-[var(--theme-text)]">
+            <h3 className="font-bold text-lg mb-4 text-[var(--theme-bg)]">
               {expense ? "Edit Expense" : "Add New Expense"}
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Title */}
               <div>
-                <label className="label text-yellow-400">Title</label>
+                <label className="label text-[var(--theme-bg)]">Title</label>
                 <input
                   type="text"
                   name="title"
                   value={form.title}
                   onChange={handleChange}
-                  className="input input-bordered w-full bg-black border-yellow-500 text-yellow-400"
+                  className="input input-bordered w-full bg-white border-[var(--theme-text)]/80 text-[var(--theme-text)]"
                   required
                 />
               </div>
 
               {/* Amount */}
               <div>
-                <label className="label text-yellow-400">Amount</label>
+                <label className="label text-[var(--theme-bg)]">Amount</label>
                 <input
                   type="number"
                   name="amount"
                   value={form.amount}
                   onChange={handleChange}
-                  className="input input-bordered w-full bg-black border-yellow-500 text-yellow-400"
+                  className="input input-bordered w-full bg-white border-[var(--theme-text)]/80 text-[var(--theme-text)]"
                   required
                 />
               </div>
 
               {/* Category */}
               <div>
-                <label className="label text-yellow-400">Category</label>
+                <label className="label text-[var(--theme-bg)]">Category</label>
                 <select
                   name="category"
                   value={form.category}
                   onChange={handleChange}
-                  className="select select-bordered w-full bg-black border-yellow-500 text-yellow-400"
+                  className="select select-bordered w-full bg-white border-[var(--theme-text)]/80 text-[var(--theme-text)]"
                   required
                 >
                   <option value="">-- Select Category --</option>
@@ -98,13 +98,13 @@ export default function ExpenseModal({ isOpen, onClose, expense }) {
 
               {/* Date */}
               <div>
-                <label className="label text-yellow-400">Date</label>
+                <label className="label text-[var(--theme-bg)]">Date</label>
                 <input
                   type="date"
                   name="date"
                   value={form.date}
                   onChange={handleChange}
-                  className="input input-bordered w-full bg-black border-yellow-500 text-yellow-400"
+                  className="input input-bordered w-full bg-white border-[var(--theme-text)]/80 text-[var(--theme-text)]"
                   required
                 />
               </div>
@@ -114,13 +114,13 @@ export default function ExpenseModal({ isOpen, onClose, expense }) {
                 <button
                   type="button"
                   onClick={onClose}
-                  className="btn bg-gray-800 text-yellow-400 border-yellow-500 hover:bg-gray-900"
+                  className="btn bg-[var(--theme-bg)] text-[var(--theme-text-muted)] border-[var(--theme-text)] hover:bg-gray-900 rounded-2xl btn-outline"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="btn bg-yellow-500 text-black hover:bg-yellow-400"
+                  className="btn bg-[var(--theme-text)]/50 text-[var(--theme-bg)] hover:bg-[var(--theme-bg)] hover:text-black rounded-2xl"
                 >
                   {expense ? "Update" : "Save"}
                 </button>

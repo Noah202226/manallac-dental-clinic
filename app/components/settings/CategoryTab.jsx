@@ -44,20 +44,20 @@ export default function CategoriesSettings() {
   };
 
   return (
-    <div className="p-4 text-yellow-400">
+    <div className="p-4 text-[var(--theme-bg)]">
       <h2 className="text-xl font-bold mb-4">Manage Categories</h2>
 
       <div className="flex gap-2 mb-4">
         <input
           type="text"
-          className="input input-bordered bg-black border-yellow-400 text-yellow-400 flex-1"
+          className="input input-bordered bg-black border-[var(--theme-bg)] text-[var(--theme-bg)] flex-1"
           value={newCategory}
           onChange={(e) => setNewCategory(e.target.value)}
           placeholder="New category name"
         />
         <button
           onClick={handleAddCategory}
-          className="btn bg-yellow-400 text-black hover:bg-yellow-500"
+          className="btn bg-[var(--theme-bg)] text-black hover:bg-yellow-500"
         >
           Add
         </button>

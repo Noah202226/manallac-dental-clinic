@@ -72,28 +72,30 @@ const DashboardData = () => {
 
   return (
     <div>
-      <h3 className="text-lg font-bold mb-3 text-yellow-400">Overview</h3>
+      <h3 className="text-lg font-bold mb-3 text-[var(--theme-text)]">
+        Overview
+      </h3>
       <div className="grid gap-4 md:grid-cols-3">
         {/* Sales */}
-        <div className="card bg-gray-900 shadow-md p-4 sm:p-6 rounded-xl">
-          <p className="text-gray-400">Total Sales</p>
-          <h4 className="text-xl sm:text-2xl font-bold text-yellow-400">
+        <div className="card bg-[var(--theme-text-muted)] shadow-md p-4 sm:p-6 rounded-xl">
+          <p className="text-[var(--theme-bg)] ">Total Sales</p>
+          <h4 className="text-xl sm:text-2xl font-bold text-[var(--theme-bg)]">
             ₱{totals.all.toLocaleString()}
           </h4>
         </div>
 
         {/* Expenses */}
-        <div className="card bg-gray-900 shadow-md p-4 sm:p-6 rounded-xl">
-          <p className="text-gray-400">Total Expenses</p>
-          <h4 className="text-xl sm:text-2xl font-bold text-yellow-400">
+        <div className="card bg-[var(--theme-text-muted)] shadow-md p-4 sm:p-6 rounded-xl">
+          <p className="text-[var(--theme-bg)]">Total Expenses</p>
+          <h4 className="text-xl sm:text-2xl font-bold text-[var(--theme-bg)]">
             ₱{expenseTotals.all.toLocaleString()}
           </h4>
         </div>
 
         {/* Revenue (Sales - Expenses) */}
-        <div className="card bg-gray-900 shadow-md p-4 sm:p-6 rounded-xl">
-          <p className="text-gray-400">Revenue</p>
-          <h4 className="text-xl sm:text-2xl font-bold text-yellow-400">
+        <div className="card bg-[var(--theme-text-muted)] shadow-md p-4 sm:p-6 rounded-xl">
+          <p className="text-[var(--theme-bg)]">Revenue</p>
+          <h4 className="text-xl sm:text-2xl font-bold text-[var(--theme-bg)]">
             ₱{(totals.all - expenseTotals.all).toLocaleString()}
           </h4>
         </div>

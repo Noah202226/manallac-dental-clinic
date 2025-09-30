@@ -99,7 +99,7 @@ function ServiceItem({
   const [subInput, setSubInput] = useState("");
 
   return (
-    <div className="border border-gray-700 rounded-lg p-3 bg-gray-900">
+    <div className="border border-gray-700 rounded-lg p-3 bg-[var(--theme-text)]">
       <h1>Services Name</h1>
       <p className="text-xs italic">
         Click the service name to view sub services
@@ -114,7 +114,7 @@ function ServiceItem({
             />
           ) : (
             <button
-              className="text-left text-yellow-300 font-semibold text-lg hover:underline hover:cursor-pointer"
+              className="text-left text-[var(--theme-bg)] font-semibold text-lg hover:underline hover:cursor-pointer"
               onClick={onToggle}
             >
               {service.name}
@@ -175,7 +175,7 @@ function ServiceItem({
               onChange={(e) => setSubInput(e.target.value)}
             />
             <button
-              className="btn bg-yellow-400 text-black join-item"
+              className="btn bg-[var(--theme-text)] text-black join-item"
               onClick={() => {
                 if (!subInput.trim()) return;
                 addSubService?.(service.id, subInput);
@@ -285,11 +285,11 @@ export default function ServicesData() {
   };
 
   if (loadingServices) {
-    return <p className="text-yellow-400">Loading services...</p>;
+    return <p className="text-[var(--theme-bg)]">Loading services...</p>;
   }
 
   return (
-    <div className="card shadow-xl w-full max-w-7xl mx-auto mt-8 bg-black text-yellow-400">
+    <div className="card shadow-xl w-full max-w-7xl mx-auto mt-8 bg-[var(--theme-bg)] text-[var(--theme-text)]">
       <div className="card-body">
         <h2 className="card-title">System Settings</h2>
         <p className="text-gray-300">
@@ -300,14 +300,14 @@ export default function ServicesData() {
         <div className="join w-full mt-4">
           <input
             type="text"
-            className="input input-bordered join-item w-full text-black"
+            className="input input-bordered join-item w-full text-[var(--theme-bg)] bg-[var(--theme-text)] "
             placeholder="Add new service"
             value={newServiceName}
             onChange={(e) => setNewServiceName(e.target.value)}
           />
           <button
             onClick={handleAddService}
-            className="btn bg-yellow-400 text-black join-item"
+            className="btn bg-[var(--theme-text)] text-black join-item"
           >
             Add
           </button>

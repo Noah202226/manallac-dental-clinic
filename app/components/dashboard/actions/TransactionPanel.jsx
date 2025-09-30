@@ -42,20 +42,22 @@ export default function TransactionsPanel({ patient }) {
     });
     setAmount("");
     setNotes("");
-    setSelectedService(null);
-    setSelectedSubService(null);
+    setSelectedService();
+    setSelectedSubService();
     // Close modal after save
     document.getElementById("txn_modal").close();
   };
 
   return (
-    <div className="bg-black p-6 rounded-2xl border border-yellow-500/40 shadow-lg flex-1  h-full overflow-y-auto mt-3 space-y-3 pr-2">
+    <div className="bg-[var(--theme-text)] p-6 rounded-2xl border border-yellow-500/40 shadow-lg flex-1  h-full overflow-y-auto mt-3 space-y-3 pr-2">
       <div className="flex items-center justify-between h-full overflow-y-auto">
-        <h3 className="text-2xl font-bold text-yellow-400">Transactions</h3>
+        <h3 className="text-2xl font-bold text-[var(--theme-bg)]">
+          Transactions
+        </h3>
 
         {/* DaisyUI Modal Trigger */}
         <button
-          className="flex items-center gap-2 bg-yellow-500 text-black px-4 py-2 rounded-xl hover:bg-yellow-400 transition"
+          className="flex items-center gap-2 bg-[var(--theme-bg)] text-[var(--theme-text)] px-4 py-2 rounded-xl hover:bg-[var(--theme-bg)] transition"
           onClick={() => document.getElementById("txn_modal").showModal()}
         >
           <FiPlusCircle /> Add
@@ -65,7 +67,7 @@ export default function TransactionsPanel({ patient }) {
       {/* DaisyUI Modal */}
       <dialog id="txn_modal" className="modal">
         <div className="modal-box bg-black border border-yellow-500/40">
-          <h3 className="font-bold text-lg text-yellow-400 mb-4">
+          <h3 className="font-bold text-lg text-[var(--theme-bg)] mb-4">
             Add Transaction
           </h3>
 
@@ -74,7 +76,7 @@ export default function TransactionsPanel({ patient }) {
             <div>
               <label className="block mb-2">Select Service</label>
               <select
-                className="select select-bordered w-full bg-black text-yellow-400 border-yellow-400"
+                className="select select-bordered w-full bg-black text-[var(--theme-bg)] border-[var(--theme-bg)]"
                 value={selectedService}
                 onChange={(e) => {
                   setSelectedService(e.target.value);
@@ -95,7 +97,7 @@ export default function TransactionsPanel({ patient }) {
               <div>
                 <label className="block mb-2">Select Sub-service</label>
                 <select
-                  className="select select-bordered w-full bg-black text-yellow-400 border-yellow-400"
+                  className="select select-bordered w-full bg-black text-[var(--theme-bg)] border-[var(--theme-bg)]"
                   value={selectedSubService}
                   onChange={(e) => setSelectedSubService(e.target.value)}
                 >
@@ -116,22 +118,22 @@ export default function TransactionsPanel({ patient }) {
               placeholder="Amount (₱)"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="input input-bordered w-full bg-black text-yellow-400 border-yellow-400"
+              className="input input-bordered w-full bg-black text-[var(--theme-bg)] border-[var(--theme-bg)]"
             />
             <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="input input-bordered w-full bg-black text-yellow-400 border-yellow-400"
+              className="input input-bordered w-full bg-black text-[var(--theme-bg)] border-[var(--theme-bg)]"
             />
             <textarea
               placeholder="Notes (optional)"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="textarea textarea-bordered w-full bg-black text-yellow-400 border-yellow-400"
+              className="textarea textarea-bordered w-full bg-black text-[var(--theme-bg)] border-[var(--theme-bg)]"
             />
 
-            <button type="submit" className="btn btn-warning w-full font-bold">
+            <button type="submit" className="btn btn-primary w-full font-bold">
               Save Transaction
             </button>
           </form>
@@ -158,7 +160,9 @@ export default function TransactionsPanel({ patient }) {
               className="flex items-center justify-between p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition"
             >
               <div>
-                <p className="text-yellow-400 font-semibold">₱{txn.amount}</p>
+                <p className="text-[var(--theme-bg)] font-semibold">
+                  ₱{txn.amount}
+                </p>
                 <p className="text-sm text-gray-400">
                   {" "}
                   {new Date(txn.date).toLocaleDateString("en-US", {

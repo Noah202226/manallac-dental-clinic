@@ -36,19 +36,20 @@ export default function ViewHistoryModal({ patient, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-      <div className="bg-gray-900 p-6 rounded-xl border border-gray-700 w-[28rem] max-h-[80vh] overflow-y-auto">
-        <h2 className="text-xl font-bold text-yellow-400 mb-4">
+      <div className="bg-[var(--theme-text)] p-6 rounded-xl border border-gray-700 w-[28rem] max-h-[80vh] overflow-y-auto">
+        <h2 className="text-xl font-bold text-[var(--theme-bg)] mb-4">
           Payment History for {patient.patientName}
         </h2>
 
         <div className="mb-4 space-y-1 text-sm">
           <p className="text-gray-300">
-            <span className="font-semibold text-white ">Service Rendered:</span>
+            <span className="font-semibold text-[var(--theme-bg)] ">
+              Service Rendered:
+            </span>
             {loading ? (
               " Computing..."
             ) : (
-              <span className="text-[var(--theme-text)]">
-                {" "}
+              <span className="text-[var(--theme-bg)]">
                 {patient?.serviceName.toLocaleString()}{" "}
               </span>
             )}
@@ -58,7 +59,7 @@ export default function ViewHistoryModal({ patient, onClose }) {
             {loading ? (
               " Computing..."
             ) : (
-              <span className="text-[var(--theme-text)]">
+              <span className="text-[var(--theme-bg)]">
                 {" "}
                 {patient?.servicePrice.toLocaleString()}{" "}
               </span>
@@ -68,12 +69,16 @@ export default function ViewHistoryModal({ patient, onClose }) {
 
         <div className="flex justify-between mb-4 text-sm">
           <p className="text-gray-300">
-            <span className="font-semibold text-yellow-400">Total Paid:</span> ₱
-            {loading ? " Computing..." : totalPaid.toLocaleString()}
+            <span className="font-semibold text-[var(--theme-bg)]">
+              Total Paid:
+            </span>
+            {"  "}₱{loading ? " Computing..." : totalPaid.toLocaleString()}
           </p>
           <p className="text-gray-300">
-            <span className="font-semibold text-yellow-400">Remaining:</span> ₱
-            {(patient.balance ?? 0).toLocaleString()}
+            <span className="font-semibold text-[var(--theme-bg)]">
+              Remaining:
+            </span>{" "}
+            ₱{(patient.balance ?? 0).toLocaleString()}
           </p>
         </div>
 
@@ -83,7 +88,7 @@ export default function ViewHistoryModal({ patient, onClose }) {
           <p className="text-gray-400">No payments found.</p>
         ) : (
           <table className="w-full text-sm text-left border border-gray-700 rounded-lg overflow-hidden">
-            <thead className="bg-gray-800 text-yellow-400">
+            <thead className="bg-gray-800 text-[var(--theme-bg)]">
               <tr>
                 <th className="px-3 py-2">Date</th>
                 <th className="px-3 py-2">Amount</th>
@@ -102,7 +107,7 @@ export default function ViewHistoryModal({ patient, onClose }) {
                       day: "numeric",
                     })}
                   </td>
-                  <td className="px-3 py-2 text-yellow-400 font-bold">
+                  <td className="px-3 py-2 text-[var(--theme-bg)]font-bold">
                     ₱{p.amountPaid.toLocaleString()}
                   </td>
                 </tr>

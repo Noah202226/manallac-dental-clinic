@@ -106,10 +106,10 @@ export default function ExpensesTab() {
   }, []);
 
   return (
-    <div className="flex flex-col h-full overflow-hidden text-yellow-400">
+    <div className="flex flex-col h-full overflow-hidden text-[var(--theme-text)]">
       {/* 🔹 Fixed Header (summary + filter) */}
-      <div className="shrink-0 bg-black pb-2 z-5">
-        <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+      <div className="shrink-0 bg-[var(--theme-text)] p-2 z-5">
+        <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 text-[var(--theme-bg)]">
           💰 Expenses Report
         </h2>
 
@@ -117,19 +117,19 @@ export default function ExpensesTab() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           <div className="card bg-black border border-yellow-500/40 shadow-lg rounded-2xl p-4">
             <h3 className="text-sm font-medium text-gray-400">Today</h3>
-            <p className="text-2xl md:text-3xl font-extrabold text-yellow-400">
+            <p className="text-2xl md:text-3xl font-extrabold text-[var(--theme-bg)]">
               ₱{todayTotal.toLocaleString()}
             </p>
           </div>
           <div className="card bg-black border border-yellow-500/40 shadow-lg rounded-2xl p-4">
             <h3 className="text-sm font-medium text-gray-400">This Month</h3>
-            <p className="text-2xl md:text-3xl font-extrabold text-yellow-400">
+            <p className="text-2xl md:text-3xl font-extrabold text-[var(--theme-bg)]">
               ₱{monthTotal.toLocaleString()}
             </p>
           </div>
           <div className="card bg-black border border-yellow-500/40 shadow-lg rounded-2xl p-4">
             <h3 className="text-sm font-medium text-gray-400">This Year</h3>
-            <p className="text-2xl md:text-3xl font-extrabold text-yellow-400">
+            <p className="text-2xl md:text-3xl font-extrabold text-[var(--theme-bg)]">
               ₱{yearTotal.toLocaleString()}
             </p>
           </div>
@@ -141,24 +141,24 @@ export default function ExpensesTab() {
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            className="input input-sm bg-black border border-yellow-400 text-yellow-400 rounded-lg"
+            className="input input-sm bg-black border border-[var(--theme-text)] text-[var(--theme-text)] rounded-lg"
           />
           <span className="text-gray-400">to</span>
           <input
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            className="input input-sm bg-black border border-yellow-400 text-yellow-400 rounded-lg"
+            className="input input-sm bg-black border border-[var(--theme-text)] text-[var(--theme-text)] rounded-lg"
           />
           <button
             onClick={() => filterByDate(startDate, endDate)}
-            className="btn btn-sm bg-yellow-400 text-black hover:bg-yellow-500 flex items-center gap-2"
+            className="btn btn-sm bg-[var(--theme-text)] text-black hover:bg-yellow-500 flex items-center gap-2"
           >
             <FiFilter /> Filter
           </button>
           <button
             onClick={generateReport}
-            className="btn btn-sm bg-yellow-400 text-black"
+            className="btn btn-sm bg-[var(--theme-text)] text-black"
           >
             Generate Expense Report
           </button>
@@ -169,9 +169,9 @@ export default function ExpensesTab() {
       <div className="flex-1 min-h-0 overflow-y-auto">
         {/* Desktop Table */}
         <div className="hidden md:block">
-          <table className="table  w-full text-yellow-400">
+          <table className="table  w-full text-[var(--theme-text)]">
             <thead>
-              <tr className="bg-yellow-500 text-black sticky top-0">
+              <tr className="bg-[var(--theme-text)] text-black sticky top-0">
                 <th>Date</th>
                 <th>Expense</th>
                 <th>Category</th>
@@ -228,13 +228,13 @@ export default function ExpensesTab() {
                 </span>
               </div>
 
-              <h2 className="text-lg font-semibold text-yellow-400">
+              <h2 className="text-lg font-semibold text-[var(--theme-text)]">
                 {e.title}
               </h2>
 
               <div className="flex justify-between items-center mt-3">
                 <span className="text-sm text-gray-400">Amount</span>
-                <span className="text-xl font-bold text-yellow-400">
+                <span className="text-xl font-bold text-[var(--theme-text)]">
                   ₱{e.amount.toLocaleString()}
                 </span>
               </div>

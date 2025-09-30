@@ -20,11 +20,11 @@ export default function ReportsTabs() {
     <div className="w-full h-full">
       {/* Header */}
       {/* <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold text-yellow-400">Reports</h2>
+        <h2 className="text-2xl font-bold text-[var(--theme-bg)]">Reports</h2>
       </div> */}
 
       {/* 🚀 Custom Scrollable Tab Bar */}
-      <div className="relative border-b border-yellow-400 overflow-x-auto">
+      <div className="relative border-b border-[var(--theme-bg)]overflow-x-auto">
         <div className="flex space-x-2 min-w-max">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.key;
@@ -35,8 +35,8 @@ export default function ReportsTabs() {
                 className={`relative px-4 py-2 rounded-md font-semibold transition-colors 
                   ${
                     isActive
-                      ? "text-black bg-yellow-400"
-                      : "text-gray-400 hover:text-yellow-300 hover:bg-yellow-400/20"
+                      ? "text-black bg-[var(--theme-bg)]"
+                      : "text-gray-400 hover:text-yellow-300 hover:bg-[var(--theme-bg)]/20"
                   }`}
               >
                 {tab.label}
@@ -54,7 +54,7 @@ export default function ReportsTabs() {
       </div>
 
       {/* Tab Content */}
-      <div className=" flex-col mt-6 border p-2 border-yellow-400 rounded-lg bg-black text-yellow-400 h-full">
+      <div className=" flex-col mt-6 border p-2 border-[var(--theme-bg)] rounded-lg bg-[var(--theme-bg)] text-[var(--theme-bg)] h-full">
         {/* 🔹 Transactions Report */}
         {activeTab === "transactions" && (
           <div className="flex-1 overflow-hidden h-full">
@@ -73,7 +73,7 @@ export default function ReportsTabs() {
         {activeTab === "patients" && (
           <div>
             <p className="mb-4">🧑‍⚕️ Patients Report coming soon...</p>
-            <button className="btn bg-yellow-400 text-black">
+            <button className="btn bg-[var(--theme-bg)] text-black">
               Generate Patient Report
             </button>
           </div>
@@ -83,7 +83,7 @@ export default function ReportsTabs() {
         {activeTab === "financial" && (
           <div>
             <p className="mb-4">📊 Financial Summary coming soon...</p>
-            <button className="btn bg-yellow-400 text-black">
+            <button className="btn bg-[var(--theme-bg)] text-black">
               Generate Financial Report
             </button>
           </div>
