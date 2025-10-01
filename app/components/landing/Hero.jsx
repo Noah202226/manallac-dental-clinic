@@ -32,7 +32,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="min-h-screen flex flex-col md:flex-row bg-[var(--theme-bg)] text-[var(--theme-text)]">
+    <section className="min-h-screen flex flex-col md:flex-row bg-[var(--theme-text-muted)] text-[var(--theme-text)]">
       {/* Left Side - Illustration + Text */}
       <div className="flex flex-col justify-center items-center text-center px-6 py-10 md:flex-1 md:px-12 lg:px-16">
         <motion.img
@@ -50,8 +50,13 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          Manage Your <span className="text-[var(--theme-text)]">Clinic</span>{" "}
-          Smarter
+          Manage Your{" "}
+          <span className="text-[var(--theme-text)] bg-[var(--theme-bg)] px-5 rounded-2xl">
+            Clinic
+          </span>{" "}
+          <span className="text-primary px-5 rounded-2xl underline">
+            Smarter
+          </span>
         </motion.h1>
 
         <motion.p

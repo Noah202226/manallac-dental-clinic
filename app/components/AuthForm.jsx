@@ -78,7 +78,7 @@ export default function AuthForm({ handleSubmit, submitType, onToggle }) {
         </button>
 
         {/* Toggle */}
-        {onToggle && (
+        {/* {onToggle && (
           <p className="text-center text-sm text-base-content">
             {submitType === "Sign Up" ? (
               <>
@@ -106,7 +106,7 @@ export default function AuthForm({ handleSubmit, submitType, onToggle }) {
               </>
             )}
           </p>
-        )}
+        )} */}
       </form>
     </div>
   );
