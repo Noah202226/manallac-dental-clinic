@@ -4,9 +4,18 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useSettingsStore } from "../../stores/useSettingStore";
 import ServicesData from "../settings/services/Services";
-import { Edit, Trash, Plus } from "lucide-react";
+import { Edit, Trash, Plus, Settings } from "lucide-react"; // Added Settings icon
 import CategoriesSettings from "../settings/CategoryTab";
 import PersonalizationTab from "../settings/PersonalizationTab";
+
+// 🎨 THEME VARIABLES FOR MODERN LOOK (Amber/Dark Theme)
+const MAIN_BG = "bg-gray-900"; // Background for the whole component content
+const TAB_BAR_BG = "bg-gray-950"; // Deep dark background for the tab bar area
+const ACCENT_COLOR = "text-amber-400"; // Vibrant accent color for text/icons
+const ACCENT_BG = "bg-amber-400"; // Vibrant accent color for buttons/highlights
+const ACTIVE_TAB_BG = "bg-gray-800"; // Background for the currently active tab button
+const TEXT_COLOR = "text-gray-100";
+const TEXT_MUTED = "text-gray-400";
 
 export default function SettingsTabs() {
   const [activeTab, setActiveTab] = useState("personalization");
@@ -34,35 +43,39 @@ export default function SettingsTabs() {
   const [newProduct, setNewProduct] = useState({ name: "", price: "" });
 
   return (
-    <div className="w-full">
+    <div className={`w-full p-4 ${MAIN_BG} rounded-xl shadow-2xl`}>
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold text-[var(--theme-text)]">
-          Settings
+        <h2
+          className={`text-3xl font-extrabold flex items-center gap-2 ${ACCENT_COLOR}`}
+        >
+          <Settings size={28} /> App Settings
         </h2>
       </div>
 
       {/* 🚀 Custom Scrollable Tab Bar */}
-      <div className="relative border-b border-[var(--theme-text)] overflow-x-auto">
-        <div className="flex space-x-2 min-w-max px-2">
+      <div
+        className={`relative border-b border-gray-700 ${TAB_BAR_BG} p-2 rounded-t-xl`}
+      >
+        <div className="flex space-x-2 min-w-max overflow-x-auto">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.key;
             return (
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`relative px-4 py-2 rounded-md font-semibold transition-colors 
-                  ${
-                    isActive
-                      ? "text-black bg-[var(--theme-text)]"
-                      : "text-gray-400 hover:text-[var(--theme-text)] hover:bg-yellow-400/20"
-                  }`}
+                className={`relative px-4 py-3 whitespace-nowrap rounded-lg font-semibold transition-colors duration-200 ${
+                  isActive
+                    ? `${ACTIVE_TAB_BG} ${ACCENT_COLOR} shadow-inner` // Active tab state
+                    : `${TEXT_MUTED} hover:text-white hover:bg-gray-700` // Inactive tab state
+                }`}
               >
                 {tab.label}
+                {/* Framer Motion Active Indicator */}
                 {isActive && (
                   <motion.div
                     layoutId="activeTab"
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-black"
+                    className={`absolute bottom-0 left-0 right-0 h-1 rounded-t-lg ${ACCENT_BG}`}
                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
                   />
                 )}
@@ -72,24 +85,30 @@ export default function SettingsTabs() {
         </div>
       </div>
 
-      {/* Tab Content */}
-      <div className="mt-6 p-4  border border-yellow-400 rounded-lg bg-[var(--theme-text)]">
+      {/* Tab Content Container */}
+      <div
+        className={`mt-0 p-6 ${MAIN_BG} border border-gray-700 rounded-b-xl min-h-[500px] ${TEXT_COLOR}`}
+      >
         {/* 🔹 Personalization */}
         {activeTab === "personalization" && <PersonalizationTab />}
 
         {/* 🔹 Users */}
         {activeTab === "users" && (
-          <div className="text-[var(--theme-bg)] space-y-4">
-            {/* Add User */}
-            <div className="flex gap-2">
+          <div className="space-y-6">
+            <h3 className="text-xl font-bold border-b border-gray-700 pb-2">
+              Manage Users
+            </h3>
+
+            {/* Add User Form */}
+            <div className="flex gap-4">
               <input
                 type="text"
                 value={newUser.name}
                 onChange={(e) =>
                   setNewUser((u) => ({ ...u, name: e.target.value }))
                 }
-                placeholder="Name"
-                className="input input-bordered bg-[var(--theme-bg)] border-[var(--theme-bg)] text-[var(--theme-text)]"
+                placeholder="New User Name"
+                className={`flex-1 p-3 rounded-lg ${TEXT_COLOR} bg-gray-700 border border-gray-600 focus:ring-amber-400 focus:border-amber-400`}
               />
               <input
                 type="email"
@@ -97,8 +116,8 @@ export default function SettingsTabs() {
                 onChange={(e) =>
                   setNewUser((u) => ({ ...u, email: e.target.value }))
                 }
-                placeholder="Email"
-                className="input input-bordered bg-[var(--theme-bg)] border-[var(--theme-bg)] text-[var(--theme-text)]"
+                placeholder="Email Address"
+                className={`flex-1 p-3 rounded-lg ${TEXT_COLOR} bg-gray-700 border border-gray-600 focus:ring-amber-400 focus:border-amber-400`}
               />
               <button
                 onClick={() => {
@@ -106,9 +125,9 @@ export default function SettingsTabs() {
                   addUser(newUser);
                   setNewUser({ name: "", email: "" });
                 }}
-                className="btn bg-[var(--theme-bg)] text-black border-none"
+                className={`btn ${ACCENT_BG} text-gray-950 hover:bg-amber-500 font-bold px-6 py-3 rounded-lg flex items-center transition`}
               >
-                <Plus size={16} />
+                <Plus size={18} /> Add
               </button>
             </div>
 
@@ -117,21 +136,25 @@ export default function SettingsTabs() {
               {users.map((u) => (
                 <div
                   key={u.id}
-                  className="flex justify-between items-center border-b border-yellow-400 pb-1"
+                  className="flex justify-between items-center p-3 rounded-lg bg-gray-800 hover:bg-gray-700 transition"
                 >
-                  <span>
-                    {u.name} - <span className="italic">{u.email}</span>
+                  <span className="font-semibold">
+                    {u.name} -{" "}
+                    <span className={`${TEXT_MUTED} italic`}>{u.email}</span>
                   </span>
                   <button
                     onClick={() => deleteUser(u.id)}
-                    className="btn btn-ghost btn-xs text-red-600"
+                    className="text-red-500 hover:text-red-400 p-1 rounded-full transition"
+                    title="Delete User"
                   >
-                    <Trash size={16} />
+                    <Trash size={20} />
                   </button>
                 </div>
               ))}
               {users.length === 0 && (
-                <p className="italic">No users added yet...</p>
+                <p className={`italic p-4 text-center ${TEXT_MUTED}`}>
+                  No users added yet. Add staff accounts here.
+                </p>
               )}
             </div>
           </div>
