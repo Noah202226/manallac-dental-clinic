@@ -54,7 +54,7 @@ export default function ReportsTabs() {
       </div>
 
       {/* Tab Content */}
-      <div className=" flex-col mt-6 border p-2 border-[var(--theme-bg)] rounded-lg bg-[var(--theme-bg)] text-[var(--theme-bg)] h-full">
+      <div className=" flex-col mt-2 border p-2 border-[var(--theme-bg)] rounded-lg bg-[var(--theme-bg)] text-[var(--theme-bg)] h-full">
         {/* 🔹 Transactions Report */}
         {activeTab === "transactions" && (
           <div className="flex-1 overflow-hidden h-full">

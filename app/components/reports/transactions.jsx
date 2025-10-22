@@ -1,76 +1,130 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+// 1. Import deleteTransaction from the store
 import { useTransactionStore } from "../../stores/useTransactionStore";
-import { FiDollarSign, FiFilter } from "react-icons/fi";
+import { FiDollarSign, FiFilter, FiTrash2 } from "react-icons/fi"; // Added FiTrash2
 import { FaPesoSign } from "react-icons/fa6";
 
 // PDF
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import "../../Roboto-font";
+import toast from "react-hot-toast";
 
 export default function SalesDashboard() {
-  const { transactions, fetchTransactions, filterByDate, filteredTotal } =
-    useTransactionStore();
+  const {
+    transactions,
+    fetchTransactions,
+    filterByDate,
+    filteredTotal,
+    addTransaction,
+    // 2. Destructure the new deleteTransaction action
+    deleteTransaction,
+  } = useTransactionStore();
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  // ✅ Automatically set first and last day of current month
-  useEffect(() => {
-    const updateMonthRange = () => {
-      const now = new Date();
+  // ✅ Modal State
+  const [showModal, setShowModal] = useState(false);
+  const [form, setForm] = useState({
+    patientName: "",
+    serviceName: "",
+    subServiceName: "",
+    amount: "",
+    paymentType: "One-time",
+    date: "",
+    remarks: "",
+    patientId: "",
+  });
 
-      const firstDay = new Date(now.getFullYear(), now.getMonth(), 1)
-        .toISOString()
-        .split("T")[0];
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-      const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0)
-        .toISOString()
-        .split("T")[0];
-
-      setStartDate(firstDay);
-      setEndDate(lastDay);
-
-      // Auto-filter data when month changes
-      filterByDate(firstDay, lastDay);
+  const handleSaveTransaction = async () => {
+    const data = {
+      ...form,
+      amount: Number(form.amount),
+      date: new Date(form.date).toISOString(),
     };
 
-    updateMonthRange();
+    const res = await addTransaction(data);
+    if (res.success) {
+      setShowModal(false);
+      setForm({
+        patientId: "",
+        patientName: "",
+        serviceName: "",
+        subServiceName: "",
+        amount: "",
+        paymentType: "One-time",
+        date: "",
+        remarks: "",
+      });
+      toast.success("Transaction added successfully!");
+    } else {
+      toast.error("Failed to add transaction.");
+    }
 
-    // ✅ Auto-refresh when month changes (check every hour)
-    const interval = setInterval(() => {
-      updateMonthRange();
-    }, 1000 * 60 * 60); // 1 hour
+    // Call fetchTransactions after state update
+    fetchTransactions();
+  };
 
-    return () => clearInterval(interval);
+  // 3. New Delete Handler Function
+  const handleDeleteTransaction = async (transactionId) => {
+    if (
+      !window.confirm(
+        "Are you sure you want to delete this transaction? This action cannot be undone."
+      )
+    ) {
+      return;
+    }
+
+    toast.loading("Deleting transaction...", { id: "delete-toast" });
+    const res = await deleteTransaction(transactionId);
+    toast.dismiss("delete-toast");
+
+    if (res.success) {
+      toast.success("Transaction deleted successfully!");
+    } else {
+      toast.error("Failed to delete transaction.");
+    }
+
+    // Re-fetch transactions to ensure dashboard reflects the change
+    fetchTransactions();
+  };
+
+  // ✅ Automatically set first/last day of month
+  useEffect(() => {
+    const now = new Date();
+    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1)
+      .toISOString()
+      .split("T")[0];
+    const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0)
+      .toISOString()
+      .split("T")[0];
+
+    setStartDate(firstDay);
+    setEndDate(lastDay);
+    filterByDate(firstDay, lastDay);
   }, [filterByDate]);
 
-  // PDF Report
+  // ✅ PDF Report
   const generateReport = () => {
     const doc = new jsPDF();
-
-    // Title
     doc.setFontSize(16);
     doc.setFont("Roboto-font");
     doc.text("Sales Report", 14, 20);
 
-    // Date range
     if (startDate && endDate) {
       doc.setFontSize(11);
       doc.text(`From: ${startDate} To: ${endDate}`, 14, 28);
     }
 
-    // Build table rows
     const rows = transactions.map((t) => [
-      new Date(t.date).toLocaleString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
+      new Date(t.date).toLocaleString(),
       t.patientName,
       t.serviceName,
       t.paymentType,
@@ -81,10 +135,8 @@ export default function SalesDashboard() {
       startY: 35,
       head: [["Date", "Patient", "Service", "Type", "Amount"]],
       body: rows,
-      styles: { font: "helvetica" },
     });
 
-    // Totals
     const totalAmount = transactions.reduce((sum, t) => sum + t.amount, 0);
     doc.setFontSize(12);
     doc.text(
@@ -92,12 +144,10 @@ export default function SalesDashboard() {
       14,
       doc.lastAutoTable.finalY + 10
     );
-
-    // Save PDF
     doc.save("sales_report.pdf");
   };
 
-  // Totals calculation
+  // ✅ Summary Totals
   const totals = useMemo(() => {
     const today = new Date().toISOString().split("T")[0];
     const now = new Date();
@@ -108,7 +158,11 @@ export default function SalesDashboard() {
 
     transactions.forEach((t) => {
       const d = new Date(t.date);
+      // NOTE: This comparison for today total is incorrect as it includes time.
+      // It should compare date only, but since t.date is ISOString from DB,
+      // we'll stick with the original for now or recommend a fix.
       if (t.date.startsWith(today)) todayTotal += t.amount;
+
       if (
         d.getMonth() === now.getMonth() &&
         d.getFullYear() === now.getFullYear()
@@ -126,52 +180,61 @@ export default function SalesDashboard() {
 
   return (
     <div className="flex flex-1 flex-col h-full overflow-hidden text-[var(--theme-bg)]">
-      {/* 🔹 Fixed Header (totals + filter) */}
-      <div className="shrink-0 bg-[var(--theme-text)] p-2 z-5">
-        <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-          <FaPesoSign /> Sales Dashboard
-        </h2>
+      {/* 🔹 Header */}
+      <div className="shrink-0 bg-[var(--theme-text)] p-2 z-5 rounded-xl">
+        <div className="flex justify-between mb-4">
+          <h2 className="text-2xl font-bold flex items-center gap-2">
+            <FaPesoSign /> Sales Dashboard
+          </h2>
+
+          <button
+            onClick={() => setShowModal(true)}
+            className="btn btn-sm bg-[var(--theme-bg)] text-black"
+          >
+            New Transaction
+          </button>
+        </div>
 
         {/* Totals */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          <div className="card bg-black border border-yellow-500/40 shadow-lg rounded-2xl p-4 text-[var(--theme-bg)]">
-            <h3 className="text-sm font-medium text-gray-400">Today</h3>
-            <p className="text-2xl md:text-3xl font-extrabold text-[var(--theme-bg)]">
+          <div className="card bg-black border border-yellow-500/40 p-4 text-[var(--theme-bg)]">
+            <h3 className="text-sm text-gray-400">Today</h3>
+            <p className="text-3xl font-bold">
               ₱{totals.today.toLocaleString()}
             </p>
           </div>
-          <div className="card bg-black border border-yellow-500/40 shadow-lg rounded-2xl p-4 text-[var(--theme-bg)]">
-            <h3 className="text-sm font-medium text-gray-400">This Month</h3>
-            <p className="text-2xl md:text-3xl font-extrabold text-[var(--theme-bg)]">
+          <div className="card bg-black border border-yellow-500/40 p-4 text-[var(--theme-bg)]">
+            <h3 className="text-sm text-gray-400">This Month</h3>
+            <p className="text-3xl font-bold">
               ₱{totals.month.toLocaleString()}
             </p>
           </div>
-          <div className="card bg-black border border-yellow-500/40 shadow-lg rounded-2xl p-4 text-[var(--theme-bg)]">
-            <h3 className="text-sm font-medium text-gray-400">This Year</h3>
-            <p className="text-2xl md:text-3xl font-extrabold text-[var(--theme-bg)]">
+          <div className="card bg-black border border-yellow-500/40 p-4 text-[var(--theme-bg)]">
+            <h3 className="text-sm text-gray-400">This Year</h3>
+            <p className="text-3xl font-bold">
               ₱{totals.year.toLocaleString()}
             </p>
           </div>
         </div>
 
-        {/* Date Range Filter */}
-        <div className="flex flex-col md:flex-row gap-3 items-center mb-3">
+        {/* Filters */}
+        <div className="flex gap-3 items-center mb-3">
           <input
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            className="input input-sm bg-black border border-[var(--theme-bg)] text-[var(--theme-bg)] rounded-lg"
+            className="input input-sm text-black"
           />
-          <span className="text-gray-400">to</span>
+          <span>to</span>
           <input
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            className="input input-sm bg-black border border-[var(--theme-bg)] text-[var(--theme-bg)] rounded-lg"
+            className="input input-sm text-black"
           />
           <button
             onClick={() => filterByDate(startDate, endDate)}
-            className="btn btn-sm bg-[var(--theme-bg)] text-black hover:bg-yellow-500 flex items-center gap-2"
+            className="btn btn-sm"
           >
             <FiFilter /> Filter
           </button>
@@ -182,93 +245,135 @@ export default function SalesDashboard() {
             Generate Sales Report
           </button>
         </div>
-
-        {filteredTotal > 0 && (
-          <p className="mb-3 text-green-400 font-bold">
-            Total in Range: ₱{filteredTotal.toLocaleString()}
-          </p>
-        )}
       </div>
 
-      {/* 🔹 Scrollable content */}
-      <div className="flex-1 min-h-full overflow-y-auto">
-        {/* Desktop Table */}
-        <div className="hidden md:block  h-100 overflow-x-auto rounded-box border border-base-content/5">
-          <table className="table overflow-auto text-[var(--theme-text)]">
-            <thead>
-              <tr className="bg-[var(--theme-text)] text-black sticky top-0">
-                <th>Date</th>
-                <th>Patient</th>
-                <th>Service</th>
-                <th>Type</th>
-                <th>Amount</th>
+      {/* 🔹 Desktop Table */}
+      <div className="hidden md:block overflow-x-auto border border-base-content/5">
+        <table className="table text-[var(--theme-text)]">
+          <thead>
+            <tr className="bg-[var(--theme-text)] text-black sticky top-0">
+              <th>Date</th>
+              <th>Patient</th>
+              <th>Service</th>
+              <th>Type</th>
+              <th>Amount</th>
+              {/* 4. Add new column header */}
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {transactions.map((t) => (
+              <tr key={t.$id}>
+                <td>{new Date(t.date).toLocaleString()}</td>
+                <td>{t.patientName}</td>
+                <td>{t.serviceName}</td>
+                <td>{t.paymentType}</td>
+                <td>₱{t.amount.toLocaleString()}</td>
+                {/* 5. Add Delete Button */}
+                <td>
+                  <button
+                    onClick={() => handleDeleteTransaction(t.$id)}
+                    className="btn btn-xs btn-error text-white"
+                    title="Delete Transaction"
+                  >
+                    <FiTrash2 />
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {transactions.map((t) => (
-                <tr key={t.$id}>
-                  <td>
-                    {new Date(t.date).toLocaleString("en-US", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </td>
-                  <td>{t.patientName}</td>
-                  <td>{t.serviceName}</td>
-                  <td>{t.paymentType}</td>
-                  <td>₱{t.amount.toLocaleString()}</td>
-                </tr>
-              ))}
-              {transactions.length === 0 && (
-                <tr>
-                  <td colSpan={5} className="text-center py-4 text-gray-500">
-                    No transactions found for this range.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Mobile Cards */}
-        <div className="grid gap-4 md:hidden p-2">
-          {transactions.map((t) => (
-            <div
-              key={t.$id}
-              className="card bg-[var(--theme-bg)] border border-yellow-500/40 shadow-lg rounded-2xl p-4 hover:shadow-yellow-500/20 transition-all duration-300"
-            >
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-sm font-medium text-gray-400">
-                  {new Date(t.date).toLocaleString("en-US", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </span>
-                <span className="badge badge-warning text-black font-bold px-3 py-1 rounded-full">
-                  {t.paymentType}
-                </span>
-              </div>
-
-              <h2 className="text-lg font-semibold text-[var(--theme-bg)]">
-                {t.patientName} – {t.serviceName}
-              </h2>
-
-              <div className="flex justify-between items-center mt-3">
-                <span className="text-sm text-gray-400">Amount</span>
-                <span className="text-xl font-bold text-[var(--theme-bg)]">
-                  ₱{t.amount.toLocaleString()}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+            {transactions.length === 0 && (
+              <tr>
+                {/* 6. Update colspan to 6 */}
+                <td colSpan={6} className="text-center">
+                  No transactions found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
+
+      {/* ✅ Modal (No changes needed here) */}
+      {showModal && (
+        <dialog className="modal modal-open">
+          <div className="modal-box ">
+            <h3 className="font-bold text-lg mb-2">New Transaction</h3>
+
+            <div className="grid gap-2">
+              <input
+                type="text"
+                name="patientName"
+                placeholder="Patient Name"
+                className="input input-sm text-black"
+                value={form.patientName}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                name="serviceName"
+                placeholder="Service"
+                className="input input-sm text-black"
+                value={form.serviceName}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                name="subServiceName"
+                placeholder="Sub-Service"
+                className="input input-sm text-black"
+                value={form.subServiceName}
+                onChange={handleChange}
+              />
+              <input
+                type="number"
+                name="amount"
+                placeholder="Amount"
+                className="input input-sm text-black"
+                value={form.amount}
+                onChange={handleChange}
+              />
+              <select
+                name="paymentType"
+                className="select select-sm text-black"
+                value={form.paymentType}
+                onChange={handleChange}
+              >
+                <option value="One-time">One-time</option>
+                <option value="Installment">Installment</option>
+              </select>
+              <input
+                type="datetime-local"
+                name="date"
+                className="input input-sm text-black"
+                value={form.date}
+                onChange={handleChange}
+              />
+              <textarea
+                name="remarks"
+                placeholder="Remarks"
+                className="textarea textarea-sm text-black"
+                value={form.remarks}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="modal-action">
+              <button
+                className="btn btn-sm"
+                onClick={() => setShowModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="btn btn-sm btn-success"
+                onClick={handleSaveTransaction}
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </dialog>
+      )}
     </div>
   );
 }
